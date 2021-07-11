@@ -22,7 +22,7 @@ public class LaunchController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Mouse0) && collisionAmount > 0)
             {
-                lineTrajectory = (shootCoordinates - Input.mousePosition)/100;
+                lineTrajectory = (shootCoordinates - Input.mousePosition)/20;
                 DrawTrajectory(objTransform.position, lineTrajectory);
 
             }
@@ -36,7 +36,8 @@ public class LaunchController : MonoBehaviour
             {
                 shootCoordinates -= Input.mousePosition;
                 line.positionCount = 0;
-                rb.AddForce(shootCoordinates / 20, ForceMode.Impulse);
+                rb.AddForce(shootCoordinates*Time.deltaTime*20, ForceMode.Impulse);
+                rb.AddTorque(0f, 0f, -(shootCoordinates.x*shootCoordinates.y), ForceMode.Impulse);
             }
 
             yield return null;
